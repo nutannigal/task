@@ -2,13 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/Task');
 
-// @route   POST /api/tasks
-// @desc    Add a new task
+// post-task
 router.post('/', async (req, res) => {
   try {
     const { title, description, priority } = req.body;
     
-    // Validation
     if (!title || !description) {
       return res.status(400).json({ 
         success: false, 
@@ -34,8 +32,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// @route   GET /api/tasks
-// @desc    Get all tasks
+
 router.get('/', async (req, res) => {
   try {
     const tasks = await Task.find().sort({ createdDate: -1 });
@@ -53,8 +50,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route   PUT /api/tasks/:id
-// @desc    Update task status
+// PUT /api/tasks/:id
 router.put('/:id', async (req, res) => {
   try {
     const { status } = req.body;
@@ -86,8 +82,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// @route   DELETE /api/tasks/:id
-// @desc    Delete task
+
+  //  Delete task
 router.delete('/:id', async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -113,8 +109,8 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// @route   GET /api/tasks/stats
-// @desc    Get task statistics
+
+    // Get task statistics
 router.get('/stats', async (req, res) => {
   try {
     const totalTasks = await Task.countDocuments();
