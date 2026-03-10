@@ -8,21 +8,19 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
     })
   }
 
-  // Get priority badge color
   const getPriorityColor = () => {
     switch(task.priority) {
-      case 'High': return '#ff4444'  // Bright Red
-      case 'Medium': return '#ffbb33' // Bright Yellow
-      case 'Low': return '#00C851'    // Bright Green
-      default: return '#33b5e5'       // Blue
+      case 'High': return '#ff4444'
+      case 'Medium': return '#ffbb33'
+      case 'Low': return '#00C851'
+      default: return '#33b5e5'
     }
   }
 
-  // Get status color
   const getStatusColor = () => {
     switch(task.status) {
-      case 'Pending': return '#ffbb33'  // Bright Yellow
-      case 'Completed': return '#00C851' // Bright Green
+      case 'Pending': return '#ffbb33'
+      case 'Completed': return '#00C851'
       default: return '#aaaaaa'
     }
   }
@@ -32,7 +30,7 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
 
   return (
     <div className="task-card" style={{
-      background: '#1a1a1a',  // Dark black background
+      background: '#1a1a1a',
       borderRadius: '12px',
       padding: '20px',
       boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
@@ -41,7 +39,6 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Colored accent line based on priority */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -60,7 +57,7 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
         <span className="task-title" style={{
           fontSize: '18px',
           fontWeight: '600',
-          color: '#ffffff',  // White text
+          color: '#ffffff',
           flex: 1,
           marginRight: '10px',
           wordBreak: 'break-word'
@@ -68,10 +65,9 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
           {task.title}
         </span>
         
-        {/* Priority Badge */}
         <span className="priority-badge" style={{
           background: priorityColor,
-          color: '#000000',  // Black text on colored background
+          color: '#000000',
           padding: '4px 12px',
           borderRadius: '20px',
           fontSize: '12px',
@@ -84,9 +80,8 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
         </span>
       </div>
 
-      {/* Description */}
       <p className="task-description" style={{
-        color: '#cccccc',  // Light gray text
+        color: '#cccccc',
         fontSize: '14px',
         lineHeight: '1.6',
         marginBottom: '20px',
@@ -95,7 +90,6 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
         {task.description}
       </p>
 
-      {/* Footer */}
       <div className="task-footer" style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -105,10 +99,9 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
         paddingTop: '15px',
         borderTop: '1px solid #333333'
       }}>
-        {/* Status Badge */}
         <span className="status-badge" style={{
           background: statusColor,
-          color: '#000000',  // Black text
+          color: '#000000',
           padding: '4px 12px',
           borderRadius: '20px',
           fontSize: '12px',
@@ -119,7 +112,6 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
           {task.status}
         </span>
         
-        {/* Action Buttons */}
         <div className="task-actions" style={{
           display: 'flex',
           gap: '8px'
@@ -180,10 +172,9 @@ function TaskCard({ task, onUpdateStatus, onDelete }) {
         </div>
       </div>
 
-      {/* Created Date */}
       <div className="created-date" style={{
         fontSize: '11px',
-        color: '#888888',  // Gray text
+        color: '#888888',
         marginTop: '15px',
         textAlign: 'right',
         borderTop: '1px dashed #333333',

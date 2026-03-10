@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Container, Row, Col, Card, Badge, Button, Form, Alert, Spinner } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'  // Import custom CSS with media queries
+import './App.css'  
 
 const API_URL = 'http://localhost:5000/api/tasks'
 
@@ -37,7 +37,6 @@ function App() {
     fetchTasks()
   }, [])
 
-  // Handle form input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -118,7 +117,6 @@ function App() {
   const completedTasks = tasks.filter(t => t.status === 'Completed').length
   const pendingTasks = tasks.filter(t => t.status === 'Pending').length
 
-  // Get priority badge color
   const getPriorityVariant = (priority) => {
     switch(priority) {
       case 'High': return 'danger'
@@ -140,7 +138,7 @@ function App() {
 
   return (
     <Container className="app-container py-4">
-      {/* Header with responsive text */}
+      {/* Header */}
       <Card className="header-card text-center mb-4 shadow-sm">
         <Card.Body>
           <h1 className="responsive-title">📋 Task Manager</h1>
@@ -148,7 +146,7 @@ function App() {
         </Card.Body>
       </Card>
 
-      {/* Stats Cards with responsive layout */}
+      {/* Stats Cards */}
       <Row className="stats-row mb-4">
         <Col xs={12} sm={4} className="stat-col mb-3 mb-sm-0">
           <Card className="stat-card text-center shadow-sm h-100">
@@ -176,19 +174,21 @@ function App() {
         </Col>
       </Row>
 
-      {/* Add Task Button - responsive */}
-      <div className="action-section text-center mb-4">
-        <Button 
-          variant="primary" 
-          size="lg"
-          onClick={() => setShowForm(!showForm)}
-          className="action-button px-4"
-        >
-          {showForm ? '− Close Form' : '+ Add New Task'}
-        </Button>
-      </div>
+      {/* Add Task Button - RIGHT SIDE */}
+      <Row className="mb-4">
+        <Col className="d-flex justify-content-end">
+          <Button 
+            variant="primary" 
+            size="lg"
+            onClick={() => setShowForm(!showForm)}
+            className="action-button px-4"
+          >
+            {showForm ? '− Close Form' : '+ Add New Task'}
+          </Button>
+        </Col>
+      </Row>
 
-      {/* Add Task Form - responsive */}
+      {/* Add Task Form */}
       {showForm && (
         <Card className="form-card mb-4 shadow-sm">
           <Card.Body>
@@ -249,34 +249,39 @@ function App() {
         </Card>
       )}
 
-      {/* Filter Buttons - responsive */}
+      {/* Filter Buttons */}
       <Row className="filter-section mb-4">
-        <Col className="filter-container">
+        <Col className="filter-container d-flex justify-content-center gap-3">
           <Button 
             variant={filter === 'all' ? 'primary' : 'outline-primary'}
             onClick={() => setFilter('all')}
-            className="filter-button"
+            className="filter-button px-4"
+            style={{ minWidth: '100px' }}
           >
-            All
+            All ({totalTasks})
           </Button>
+          
           <Button 
             variant={filter === 'pending' ? 'warning' : 'outline-warning'}
             onClick={() => setFilter('pending')}
-            className="filter-button"
+            className="filter-button px-4 text-dark"
+            style={{ minWidth: '100px' }}
           >
-            Pending
+            Pending ({pendingTasks})
           </Button>
+          
           <Button 
             variant={filter === 'completed' ? 'success' : 'outline-success'}
             onClick={() => setFilter('completed')}
-            className="filter-button"
+            className="filter-button px-4"
+            style={{ minWidth: '100px' }}
           >
-            Completed
+            Completed ({completedTasks})
           </Button>
         </Col>
       </Row>
 
-      {/* Tasks List - responsive grid */}
+      {/* Tasks List */}
       {loading ? (
         <div className="loading-section text-center py-5">
           <Spinner animation="border" variant="primary" className="loading-spinner" />
@@ -289,24 +294,24 @@ function App() {
       ) : (
         <Row className="tasks-grid g-4">
           {filteredTasks.map(task => (
-            <Col key={task._id} className="task-col">
+            <Col key={task._id} xs={12} md={6} lg={4} className="task-col">
               <Card className="task-card h-100 shadow-sm">
                 <Card.Body className="task-body">
-                  <div className="task-header">
-                    <Card.Title className="task-title">{task.title}</Card.Title>
+                  <div className="task-header d-flex justify-content-between align-items-start mb-2">
+                    <Card.Title className="task-title h6">{task.title}</Card.Title>
                     <Badge 
                       bg={getPriorityVariant(task.priority)} 
-                      className="priority-badge"
+                      className="priority-badge ms-2"
                     >
                       {task.priority}
                     </Badge>
                   </div>
                   
-                  <Card.Text className="task-description">
+                  <Card.Text className="task-description small text-muted">
                     {task.description}
                   </Card.Text>
 
-                  <div className="task-footer">
+                  <div className="task-footer d-flex justify-content-between align-items-center mt-3">
                     <Badge 
                       bg={task.status === 'Completed' ? 'success' : 'warning'}
                       className="status-badge"
@@ -314,12 +319,12 @@ function App() {
                       {task.status}
                     </Badge>
                     
-                    <div className="task-actions">
+                    <div className="task-actions d-flex gap-2">
                       <Button
                         size="sm"
                         variant={task.status === 'Completed' ? 'outline-warning' : 'outline-success'}
                         onClick={() => updateTaskStatus(task._id, task.status)}
-                        className="action-btn complete-btn"
+                        className="action-btn"
                       >
                         {task.status === 'Completed' ? '↩' : '✓'}
                       </Button>
@@ -328,14 +333,14 @@ function App() {
                         size="sm"
                         variant="outline-danger"
                         onClick={() => deleteTask(task._id)}
-                        className="action-btn delete-btn"
+                        className="action-btn"
                       >
                         ✕
                       </Button>
                     </div>
                   </div>
 
-                  <small className="task-date">
+                  <small className="task-date text-muted d-block mt-2">
                     {formatDate(task.createdDate)}
                   </small>
                 </Card.Body>
