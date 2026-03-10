@@ -110,7 +110,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-    // Get task statistics
+    // Get task stat
 router.get('/stats', async (req, res) => {
   try {
     const totalTasks = await Task.countDocuments();
